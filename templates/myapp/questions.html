@@ -1,0 +1,53 @@
+{% extends 'myapp/base.html' %}
+{% block one %}
+
+<script>
+    function correct(answer,selected,name)
+    {
+        if(answer===selected)
+        {
+            //alert("Correct Answer!!") 
+            document.getElementById(name).style.color="green"      
+        }
+        else
+        {
+            document.getElementById(name).style.color="red"
+        }
+    }
+</script>
+
+{% if page_obj %}
+
+    {% for question in page_obj %}
+        <div class="container-fluid mt-3">
+            <h3>{{question.0}}. {{question.1}}</h3>
+            {% for option in question.3 %}
+            <div class="container">
+                <input type="radio" value="{{option}}" name="{{question.1}}"
+                class="form-check-input m-1"
+                 onclick="correct('{{question.2}}',value,'{{question.1}}+{{option}}')"/><span id="{{question.1}}+{{option}}">{{option}}</span>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endif%}
+
+<div class="pagination justify-content-end">
+    <!--<span class="step-links">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a href="?page=1" class="page-link">&laquo; first</a></li>
+            <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">previous</a></li>
+        {% endif %}-->
+
+        <span class="current p-2">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">next</a></li>
+            <li class="page-item"><a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">last &raquo;</a></li>
+        {% endif %}
+</div>
+
+
+{% endblock %}

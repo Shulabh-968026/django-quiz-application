@@ -1,0 +1,21 @@
+{% extends 'myapp/base.html' %}
+
+{% block one %}
+
+{% if courses %}
+
+
+<div class="row" style="margin-left: 200px;">
+  
+    {% for course in courses %}
+            
+        <div class="col-sm-3">
+                <a class="btn btn-lg btn-primary m-2" href="{{ course.id }}">
+                        {{ course }}
+                </a>
+        </div>        
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}
